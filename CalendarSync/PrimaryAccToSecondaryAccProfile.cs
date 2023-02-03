@@ -7,28 +7,28 @@ using System.Threading.Tasks;
 
 namespace CalendarSync
 {
-    public class PrimaryAccToSecondaryAccProfile : SyncProfile
-    {
-        public PrimaryAccToSecondaryAccProfile(string refreshToken)
-        {
-            RefreshToken = refreshToken;
-            SubjectPrefix = "[Root16]";
-        }
+	public class PrimaryAccToSecondaryAccProfile : SyncProfile
+	{
+		public PrimaryAccToSecondaryAccProfile(string refreshToken, string subjectPrefix)
+		{
+			RefreshToken = refreshToken;
+			SubjectPrefix = subjectPrefix;
+		}
 
-        public override Event MapEvent(Event e)
-        {
-            var mapped = new Event
-            {
-                Subject = SubjectPrefix,
-                Start = e.Start,
-                End = e.End,
-                IsAllDay = e.IsAllDay,
-                ShowAs = e.ShowAs,
-                Importance = e.Importance,
-                Sensitivity = e.Sensitivity,
-            };
+		public override Event MapEvent(Event e)
+		{
+			var mapped = new Event
+			{
+				Subject = SubjectPrefix,
+				Start = e.Start,
+				End = e.End,
+				IsAllDay = e.IsAllDay,
+				ShowAs = e.ShowAs,
+				Importance = e.Importance,
+				Sensitivity = e.Sensitivity,
+			};
 
-            return mapped;
-        }
-    }
+			return mapped;
+		}
+	}
 }

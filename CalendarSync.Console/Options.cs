@@ -9,11 +9,17 @@ namespace CalendarSync.Console
 {
 	public class Options
 	{
-		[Option('s', "secondaryAccountRefreshToken", Required = true, HelpText = "Refresh token for account1")]
+		[Option('s', "secondaryAccountRefreshToken", Required = true, HelpText = "Refresh token for seondary account")]
 		public string SecondaryAccountRefreshToken { get; set; }
 
-		[Option('p', "primaryAccountRefreshToken", Required = true, HelpText = "Refresh token for account2")]
+		[Option('x', "secondaryAccountSubjectPrefix", Required = true, HelpText = "Subject prefix for secondary account")]
+		public string SecondaryAccountSubjectPrefix { get; set; }
+
+		[Option('p', "primaryAccountRefreshToken", Required = true, HelpText = "Refresh token for primary account")]
 		public string PrimaryAccountRefreshToken { get; set; }
+
+		[Option('y', "primaryAccountSubjectPrefix", Required = true, HelpText = "Subject prefix primary account")]
+		public string PrimaryAccountSubjectPrefix { get; set; }
 
 		[Option('c', "clientId", Required = true, HelpText = "Trusted ClientId")]
 		public string ClientId { get; set; }

@@ -1,4 +1,5 @@
 ﻿using CalendarSync;
+using CalendarSync.Console;
 using CommandLine;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -20,8 +21,8 @@ Parser.Default.ParseArguments<Options>(args)
 
 					   var daysToSync = o.DaysToSync != 0 ? o.DaysToSync : DefaultDaysToSync;
 
-					   var source = new SecondaryAccToPrimaryAccProfile(secondaryAccountRefreshToken);
-					   var dest = new PrimaryAccToSecondaryAccProfile(primaryAccountRefreshToken);
+					   var source = new SecondaryAccToPrimaryAccProfile(secondaryAccountRefreshToken, o.SecondaryAccountSubjectPrefix);
+					   var dest = new PrimaryAccToSecondaryAccProfile(primaryAccountRefreshToken, o.PrimaryAccountSubjectPrefix);
 					   var service = new CalendarSyncService(dest, source, logger, clientId, orgConnectionString);
 					   var startTime = DateTime.UtcNow;
 					   var endTime = startTime.AddDays(daysToSync);
