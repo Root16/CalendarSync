@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "CalendarSync.Console": {
+      "commandName": "Project",
+      "commandLineArgs": "-a idk -b test -c lezfooo"
+    }
+  }
+}
