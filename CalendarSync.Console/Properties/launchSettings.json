@@ -2,7 +2,7 @@
   "profiles": {
     "CalendarSync.Console": {
       "commandName": "Project",
-      "commandLineArgs": "-a idk -b test -c lezfooo"
+      "commandLineArgs": "--secondaryAccountRefreshToken idk --primaryAccountRefreshToken test --clientId lezfooo --orgConnectionString asgsgs --daysToSync 2"
     }
   }
 }
