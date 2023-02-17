@@ -14,20 +14,25 @@ var configuration = new ConfigurationBuilder()
 
 var host = Host.CreateDefaultBuilder().Build();
 var logger = host.Services.GetRequiredService<ILogger<Program>>();
-logger.LogInformation("Logging established");
+logger.LogInformation(@"
+			BE NOT AFRAID
+			Your calendars will begin to sync
+			DO NOT close this window until you see the final logging message.
+");
 
 var primaryAccountRefreshToken = configuration["PrimaryAccountRefreshToken"];
 var primaryAccountSubjectPrefix = configuration["PrimaryAccountSubjectPrefix"];
-var secondaryAccountRefreshToken = configuration["PrimaryAccountRefreshToken"];
+var secondaryAccountRefreshToken = configuration["SecondaryAccountRefreshToken "];
 var secondaryAccountSubjectPrefix = configuration["SecondaryAccountSubjectPrefix"];
-var clientId = configuration["PrimaryAccountRefreshToken"];
-var orgConnectionString = configuration["PrimaryAccountRefreshToken"];
+var clientId = configuration["ClientId"];
+var orgConnectionString = configuration["OrgConnectionString "];
 var daysToSync = uint.Parse(configuration["DaysToSync"]);
 
 try
 {
 	using TaskService ts = new TaskService();
-	if (ts.GetTask(DailyTaskName) == null)
+	var calendarSyncTask = ts.GetTask(DailyTaskName);
+	if (calendarSyncTask == null)
 	{
 		TaskDefinition td = ts.NewTask();
 		td.RegistrationInfo.Description = "Every day at 9 am sync calendars";
@@ -52,11 +57,12 @@ try
 	var startTime = DateTime.UtcNow;
 	var endTime = startTime.AddDays(daysToSync);
 
-	Console.WriteLine("TESTTTTTT");
-	Console.ReadKey();
+	await service.SyncRangeBidirectionalAsync(startTime.ToString("O"), endTime.ToString("O"));
 
-	//await service.SyncRangeBidirectionalAsync(startTime.ToString("O"), endTime.ToString("O"));
-
+	logger.LogInformation(@"
+			Calendar syncing complete! 
+			Go forth about your day and be productive.
+	");
 }
 catch (Exception e)
 {
