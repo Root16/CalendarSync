@@ -1,5 +1,5 @@
-﻿using CalendarSync;
-using CalendarSync.Console;
+﻿using Calendula;
+using Calendula.Console;
 using CommandLine;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -26,7 +26,7 @@ var orgConnectionString = configuration["OrgConnectionString"];
 var daysToSync = uint.Parse(configuration["DaysToSync"]); try
 {
     using TaskService ts = new TaskService();
-    var calendarSyncTask = ts.GetTask(DailyTaskName); if (calendarSyncTask != null)
+    var CalendulaTask = ts.GetTask(DailyTaskName); if (CalendulaTask != null)
     {
         ts.RootFolder.DeleteTask(DailyTaskName);
     }
@@ -36,9 +36,9 @@ var daysToSync = uint.Parse(configuration["DaysToSync"]); try
         StartBoundary = DateTime.Today + new TimeSpan(hour24Time, minute24Time, 0),
         DaysInterval = 1
     };
-    td.Triggers.Add(trigger); var dir = $"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}/CalendarSync"; td.Actions.Add(new ExecAction($"{dir}/CalendarSync.Console.exe", dir, null)); ts.RootFolder.RegisterTaskDefinition(DailyTaskName, td); var source = new SecondaryAccToPrimaryAccProfile(secondaryAccountRefreshToken, secondaryAccountSubjectPrefix);
+    td.Triggers.Add(trigger); var dir = $"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}/Calendula"; td.Actions.Add(new ExecAction($"{dir}/Calendula.Console.exe", dir, null)); ts.RootFolder.RegisterTaskDefinition(DailyTaskName, td); var source = new SecondaryAccToPrimaryAccProfile(secondaryAccountRefreshToken, secondaryAccountSubjectPrefix);
     var dest = new PrimaryAccToSecondaryAccProfile(primaryAccountRefreshToken, primaryAccountSubjectPrefix);
-    var service = new CalendarSyncService(dest, source, logger, clientId, orgConnectionString);
+    var service = new CalendulaService(dest, source, logger, clientId, orgConnectionString);
     var startTime = DateTime.UtcNow;
     var endTime = startTime.AddDays(daysToSync); await service.SyncRangeBidirectionalAsync(startTime.ToString("O"), endTime.ToString("O")); logger.LogInformation(@"
             Calendar syncing complete! 

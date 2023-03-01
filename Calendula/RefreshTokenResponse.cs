@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace CalendarSync
+namespace Calendula
 {
     public class RefreshTokenResponse
     {

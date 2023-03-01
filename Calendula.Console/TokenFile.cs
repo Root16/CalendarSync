@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CalendarSync.Console
+namespace Calendula.Console
 {
     internal class TokenFile
     {

@@ -20,7 +20,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\CalendarSync\CalendarSync.csproj" />
+		<ProjectReference Include="..\Calendula\Calendula.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
