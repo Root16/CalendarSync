@@ -6,6 +6,7 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<UserSecretsId>a349f04a-d434-4e2e-a9be-60f4f86cc87e</UserSecretsId>
+		<BuiltInComInteropSupport>true</BuiltInComInteropSupport> 
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -19,7 +20,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\CalendarSync\CalendarSync.csproj" />
+		<ProjectReference Include="..\Calendula\Calendula.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

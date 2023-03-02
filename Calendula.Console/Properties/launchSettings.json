@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "CalendarSync.Console": {
+    "Calendula.Console": {
       "commandName": "Project",
       "commandLineArgs": "--secondaryAccountRefreshToken idk --primaryAccountRefreshToken test --primaryAccountSubjectPrefix [primacct] --secondaryAccountSubjectPrefix [secacct] --clientId lezfooo --orgConnectionString asgsgs --daysToSync 2"
     }

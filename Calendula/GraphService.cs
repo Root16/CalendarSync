@@ -1,7 +1,7 @@
 ﻿using Microsoft.Graph;
 using System.Net.Http.Headers;
 
-namespace CalendarSync
+namespace Calendula
 {
     public class GraphService
     {

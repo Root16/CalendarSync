@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
 
-namespace CalendarSync.Console
+namespace Calendula.Console
 {
     internal class LocalFileService
     {

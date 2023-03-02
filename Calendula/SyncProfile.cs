@@ -1,6 +1,6 @@
 ﻿using Microsoft.Graph;
 
-namespace CalendarSync
+namespace Calendula
 {
     public abstract class SyncProfile
     {
