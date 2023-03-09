@@ -9,9 +9,9 @@ namespace Calendula
 {
     public class PrimaryAccToSecondaryAccProfile : SyncProfile
     {
-        public PrimaryAccToSecondaryAccProfile(string refreshToken, string subjectPrefix)
+        public PrimaryAccToSecondaryAccProfile(string username, string subjectPrefix)
         {
-            RefreshToken = refreshToken;
+            Username = username;
             SubjectPrefix = subjectPrefix;
         }
 

@@ -26,16 +26,16 @@ namespace Calendula
 
         private async Task InitGraphClientsAsync()
         {
-            var auth = new AuthService(ClientId);
+            var auth = await AuthService.BuildAsync(ClientId);
             if (SourceGraph == null)
             {
-                var response = await auth.GetToken(SourceProfile.RefreshToken);
-                SourceGraph = new GraphService(response.AccessToken);
+                var accessToken = await auth.GetToken(SourceProfile.Username);
+                SourceGraph = new GraphService(accessToken);
             }
             if (DestinationGraph == null)
             {
-                var response = await auth.GetToken(DestinationProfile.RefreshToken);
-                DestinationGraph = new GraphService(response.AccessToken);
+                var accessToken = await auth.GetToken(DestinationProfile.Username);
+                DestinationGraph = new GraphService(accessToken);
             }
         }
 

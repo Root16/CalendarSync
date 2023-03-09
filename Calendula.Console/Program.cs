@@ -18,9 +18,9 @@ logger.LogInformation(@"
             DO NOT close this window until you see the final logging message.
 ");
 
-var primaryAccountRefreshToken = configuration["PrimaryAccountRefreshToken"];
+var primaryUsername = configuration["PrimaryAccountUsername"];
 var primaryAccountSubjectPrefix = configuration["PrimaryAccountSubjectPrefix"];
-var secondaryAccountRefreshToken = configuration["SecondaryAccountRefreshToken"];
+var secondaryUsername = configuration["SecondaryAccountUsername"];
 var secondaryAccountSubjectPrefix = configuration["SecondaryAccountSubjectPrefix"];
 var hour24Time = int.Parse(configuration["Hour24Time"]);
 var minute24Time = int.Parse(configuration["Minute24Time"]);
@@ -52,8 +52,8 @@ try
     td.Actions.Add(new ExecAction($"{dir}/Calendula.Console.exe", dir, null));
     ts.RootFolder.RegisterTaskDefinition(DailyTaskName, td);
 
-    var source = new SecondaryAccToPrimaryAccProfile(secondaryAccountRefreshToken, secondaryAccountSubjectPrefix);
-    var dest = new PrimaryAccToSecondaryAccProfile(primaryAccountRefreshToken, primaryAccountSubjectPrefix);
+    var source = new SecondaryAccToPrimaryAccProfile(secondaryUsername, secondaryAccountSubjectPrefix);
+    var dest = new PrimaryAccToSecondaryAccProfile(primaryUsername, primaryAccountSubjectPrefix);
     var service = new CalendulaService(dest, source, logger, clientId, orgConnectionString);
     var startTime = DateTime.UtcNow;
     var endTime = startTime.AddDays(daysToSync);
