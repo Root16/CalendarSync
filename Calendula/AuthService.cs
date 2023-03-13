@@ -36,7 +36,7 @@ namespace Calendula
         public async Task<string> GetToken(string username)
         {
             var accounts = await ClientApp.GetAccountsAsync();
-            var account = accounts.FirstOrDefault(a => a.Username == username);
+            var account = accounts.FirstOrDefault(a => string.Equals(a.Username, username, StringComparison.CurrentCultureIgnoreCase));
 
             var scopes = new[] { "offline_access", "https://graph.microsoft.com/Calendars.ReadWrite" };
             AuthenticationResult authResult;
