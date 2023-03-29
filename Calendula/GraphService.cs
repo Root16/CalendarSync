@@ -22,7 +22,9 @@ namespace Calendula
             var queryOptions = new[]
             {
                 new QueryOption("startDateTime", start),
-                new QueryOption("endDateTime", end)
+                new QueryOption("endDateTime", end),
+                new QueryOption("$select", "id,subject,start,end,bodypreview,isallday,showas,importance,sensitivity"),
+                new QueryOption("$orderby", $"start/datetime")
             };
             var allEvents = new List<Event>();
             var calendarEvents = await Client.Me.CalendarView.Request(queryOptions).GetAsync();

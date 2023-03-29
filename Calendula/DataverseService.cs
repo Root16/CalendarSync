@@ -20,7 +20,7 @@ namespace Calendula
 
         public async Task<DataverseEventResponse> GetOrCreateEventAsync(Event e, string sourceName)
         {
-            Log.LogInformation($"Querying Dataverse for calendar event {e.Id}");
+            Log.LogDebug($"Querying Dataverse for calendar event {e.Id}");
 
             var query = new QueryByAttribute("pl_calendarevent");
             query.AddAttributeValue("pl_sourcekey", e.Id);
@@ -29,7 +29,7 @@ namespace Calendula
             var response = await Client.RetrieveMultipleAsync(query);
             if (response.Entities.Any())
             {
-                Log.LogInformation("Found a matching calendar event in Dataverse.");
+                Log.LogDebug("Found a matching calendar event in Dataverse.");
                 return new DataverseEventResponse(response.Entities.First());
             }
             else
@@ -42,7 +42,7 @@ namespace Calendula
                     ["pl_end"] = e.End.ToDateTime(),
                 };
                 create.Id = await Client.CreateAsync(create);
-                Log.LogInformation("Created a new calendar event in Dataverse.");
+                Log.LogDebug("Created a new calendar event in Dataverse.");
                 return new DataverseEventResponse(create);
             }
         }
@@ -53,7 +53,7 @@ namespace Calendula
             {
                 ["pl_destinationkey"] = destinationKey,
             });
-            Log.LogInformation("Updated destination key in Dataverse.");
+            Log.LogDebug("Updated destination key in Dataverse.");
         }
 
         public async Task UpdateEventTimeAsync(Guid id, Event e, string sourceName)
@@ -64,7 +64,7 @@ namespace Calendula
                 ["pl_start"] = e.Start.ToDateTime(),
                 ["pl_end"] = e.End.ToDateTime()
             });
-            Log.LogInformation("Updated event time in Dataverse.");
+            Log.LogDebug("Updated event time in Dataverse.");
         }
 
         public async Task DeleteEventAsync(string destinationId)
@@ -82,7 +82,7 @@ namespace Calendula
             var e = response.Entities.First();
             await Client.DeleteAsync(e.LogicalName, e.Id);
 
-            Log.LogInformation("Deleted calendar event in Dataverse.");
+            Log.LogDebug("Deleted calendar event in Dataverse.");
         }
     }
 

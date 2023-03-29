@@ -54,7 +54,8 @@ try
 
     var source = new SecondaryAccToPrimaryAccProfile(secondaryUsername, secondaryAccountSubjectPrefix);
     var dest = new PrimaryAccToSecondaryAccProfile(primaryUsername, primaryAccountSubjectPrefix);
-    var service = new CalendulaService(dest, source, logger, clientId, orgConnectionString);
+    var calendulaLogger = host.Services.GetRequiredService<ILogger<CalendulaService>>();
+    var service = new CalendulaService(dest, source, calendulaLogger, clientId, orgConnectionString);
     var startTime = DateTime.UtcNow;
     var endTime = startTime.AddDays(daysToSync);
     await service.SyncRangeBidirectionalAsync(startTime.ToString("O"), endTime.ToString("O"));
