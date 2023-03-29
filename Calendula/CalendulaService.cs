@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using Microsoft.Graph;
+using Microsoft.Graph.Extensions;
 
 namespace Calendula
 {
@@ -48,7 +49,13 @@ namespace Calendula
 
         public async Task SyncRangeAsync(string start, string end)
         {
-            Log.LogInformation($"Syncing from {start} to {end}.");
+            Log.LogInformation($@"Syncing calendar
+        from:   {SourceProfile.Username}
+        to:     {DestinationProfile.Username}
+        start:  {DateTime.Parse(start):g}
+        end:    {DateTime.Parse(end):g}
+");
+
             await InitGraphClientsAsync();
 
             // sync changes from source to dest
@@ -69,6 +76,7 @@ namespace Calendula
             var eventsToDelete = events.Where(e => e.Subject.StartsWith(SourceProfile.SubjectPrefix) && !destinationIds.Contains(e.Id));
             foreach (var e in eventsToDelete)
             {
+                Log.LogInformation($"Deleting event on {e.Start.ToDateTimeOffset().ToLocalTime():g}");
                 await Dataverse.DeleteEventAsync(e.Id);
                 await DestinationGraph.DeleteEventAsync(e.Id);
             }
@@ -78,7 +86,7 @@ namespace Calendula
         {
             if (e.Subject.StartsWith(DestinationProfile.SubjectPrefix))
             {
-                Log.LogInformation("Skipping event that originated in destination calendar.");
+                Log.LogDebug("Skipping event that originated in destination calendar.");
                 return null;
             }
 
@@ -89,8 +97,12 @@ namespace Calendula
             var mappedEvent = SourceProfile.MapEvent(e);
             var destEvent = record.DestinationKey != null ? await DestinationGraph.GetEventByIdAsync(record.DestinationKey) : null;
 
+
+
             if (destEvent == null)
             {
+                Log.LogInformation($"Creating new event on {e.Start.ToDateTimeOffset().ToLocalTime():g}");
+
                 // create in dest
                 var destKey = await DestinationGraph.CreateEventAsync(mappedEvent);
 
@@ -103,6 +115,8 @@ namespace Calendula
             }
             else
             {
+                Log.LogInformation($"Updating event on {e.Start.ToDateTimeOffset().ToLocalTime():g}");
+              
                 // get event from dest
                 var graphEvent = await DestinationGraph.GetEventByIdAsync(record.DestinationKey);
                 mappedEvent.Id = graphEvent.Id;
